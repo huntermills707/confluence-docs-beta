@@ -32,3 +32,5 @@ git push origin main
 
 See the [Beta API Reference](reference/api.md) next, or return to
 [Beta Documentation Home](index.md).
+
+Scenario 17 repository-isolation check.
