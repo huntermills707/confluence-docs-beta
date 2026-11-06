@@ -1,5 +1,4 @@
 ---
-doc_id: d5b15477-25d9-4f06-996a-c684d07816c1
 title: Beta Getting Started
 ---
 
@@ -15,7 +14,7 @@ inside one Confluence space.
 ## Checklist
 
 - [x] Create the repository
-- [x] Add front matter with doc_ids
+- [x] Add front matter with titles
 - [ ] Merge documentation
 - [ ] Verify Confluence sync
 
