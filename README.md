@@ -10,7 +10,8 @@ custom sync code lives in this repository. Quick facts:
   `docs/**/*.md` with this repository's subtree.
 * Every document carries a `title` in YAML front matter; pages are matched by
   title in the space, and mark's page manifest (prefix `beta.sync`, stored in
-  Confluence) tracks each file's page across renames and retitles.
+  content properties on this repository's root page) tracks each file's page
+  across renames and retitles.
 * Titles must be unique within the space (this repo uses "Beta …" prefixes).
 * The **Sync docs to Confluence** workflow runs on merges to `main` and via
   `workflow_dispatch` (with a `dry_run` input).
@@ -24,14 +25,14 @@ custom sync code lives in this repository. Quick facts:
 
 | Secret | Value |
 |---|---|
-| `ATLASSIAN_BASE_URL` | `https://jaegermolino.atlassian.net` |
+| `ATLASSIAN_BASE_URL` | `https://api.atlassian.com/ex/confluence/CLOUD-ID` |
 | `ATLASSIAN_USER_EMAIL` | Atlassian account email |
-| `ATLASSIAN_API_TOKEN` | Atlassian Cloud API token |
+| `ATLASSIAN_API_TOKEN` | Scoped Atlassian Cloud API token |
 | `CONFLUENCE_SPACE_KEY` | `GHConfDocs` |
 | `CONFLUENCE_ROOT_PAGE_ID` | **this repo's own root page id** (not alpha's) |
 
-The root page is only ever the parent of this repository's pages — mark
-never writes to it or deletes it.
+Mark stores manifest content properties on the root page but never changes its
+body or title and never deletes it.
 
 ## Layout
 

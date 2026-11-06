@@ -22,7 +22,7 @@ sequenceDiagram
 | Method | Purpose |
 |---|---|
 | `mark publish` | Render diagrams and publish pages |
-| `mark publish --compile-only --check-links internal` | PR validation, no credentials |
-| `mark --track-pages` | Track each file's page across renames |
+| `mark publish --compile-only --check-links internal` | PR validation; read-only lookups, no publishing |
+| `mark publish --track-pages` | Track each file's page across renames |
 
 Back to [Beta Documentation Home](../index.md).
