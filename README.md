@@ -32,10 +32,8 @@ Quick facts:
 | `CONFLUENCE_SPACE_KEY` | `GHConfDocs` |
 | `CONFLUENCE_ROOT_PAGE_ID` | **this repo's own root page id** (not alpha's) |
 
-Because `confluence-docs-sync` is private, configure
-`CONFLUENCE_DOCS_SYNC_SSH_KEY` as the private key of a distinct read-only deploy
-key on the tool repository. This credential is separate from the Confluence
-credentials.
+The tool repository is public and requires no tool-specific checkout
+credential.
 
 ## Layout
 
@@ -49,7 +47,7 @@ docs/
 └── assets/
     └── pipeline.png
 
-.github/workflows/       thin consumers pinned to confluence-docs-sync v1.0.0
+.github/workflows/       thin consumers pinned to v1.0.1 by full commit SHA
 ```
 
 Change both workflow pins together to upgrade or roll back the tool. Do not
