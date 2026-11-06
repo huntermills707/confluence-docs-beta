@@ -47,7 +47,7 @@ docs/
 └── assets/
     └── pipeline.png
 
-.github/workflows/       thin consumers pinned to v1.0.1 by full commit SHA
+.github/workflows/       thin consumers pinned to v1.0.0 by full commit SHA
 ```
 
 Change both workflow pins together to upgrade or roll back the tool. Do not
