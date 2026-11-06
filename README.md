@@ -7,16 +7,18 @@ only ever reconciles pages whose `ghdocsync` content property names itself
 and that live beneath its own root — cross-repository interference is
 impossible by construction.
 
-See the [confluence-docs-alpha README](../confluence-docs-alpha/README.md)
-for the full documentation of the sync mechanics; everything applies
-identically here. Quick facts:
+See the canonical
+[`confluence-docs-sync`](https://github.com/huntermills707/confluence-docs-sync)
+documentation for the sync mechanics and release process. This repository
+contains content and thin workflows pinned to the same tool release as Alpha.
+Quick facts:
 
 * Every document carries a stable `doc_id` in its front matter; pages are
   matched by that id, never by title or path.
 * Titles must be unique within the space (this repo uses "Beta …" prefixes).
 * The **Sync docs to Confluence** workflow runs on pushes to `main` and via
   `workflow_dispatch` (with `dry_run` and `force_delete` inputs).
-* **Validate docs (PR)** checks pull requests without credentials.
+* **Validate docs (PR)** checks pull requests without Confluence credentials.
 * Deletions are trashed (reversible), happen last, and are capped at 5 pages
   or 20% of managed pages unless `force_delete` is set.
 
@@ -30,6 +32,11 @@ identically here. Quick facts:
 | `CONFLUENCE_SPACE_KEY` | `GHConfDocs` |
 | `CONFLUENCE_ROOT_PAGE_ID` | **this repo's own root page id** (not alpha's) |
 
+Because `confluence-docs-sync` is private, configure
+`CONFLUENCE_DOCS_SYNC_SSH_KEY` as the private key of a distinct read-only deploy
+key on the tool repository. This credential is separate from the Confluence
+credentials.
+
 ## Layout
 
 ```text
@@ -41,4 +48,9 @@ docs/
 │   └── api.md
 └── assets/
     └── pipeline.png
+
+.github/workflows/       thin consumers pinned to confluence-docs-sync v1.0.0
 ```
+
+Change both workflow pins together to upgrade or roll back the tool. Do not
+copy sync scripts or dependencies into this repository.
