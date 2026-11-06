@@ -15,7 +15,8 @@ custom sync code lives in this repository. Quick facts:
 * The **Sync docs to Confluence** workflow runs on merges to `main` and via
   `workflow_dispatch` (with a `dry_run` input).
 * **Validate docs (PR)** checks pull requests (`--compile-only
-  --check-links internal`) without Confluence credentials.
+  --check-links internal`); it never publishes but performs read-only
+  Confluence lookups to resolve links between documents.
 * Removed files have their pages **trashed** (reversible), scoped to this
   repository's root page; a run with any failure removes nothing.
 
