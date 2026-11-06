@@ -1,5 +1,4 @@
 ---
-doc_id: 63c2eaea-7bc7-4655-8062-54798e6cc8a4
 title: Beta API Reference
 ---
 
@@ -12,7 +11,7 @@ sequenceDiagram
     participant GH as GitHub
     participant GA as GitHub Action
     participant CF as Confluence
-    GH->>GA: push to main
+    GH->>GA: PR merged to main
     GA->>CF: create/update pages
     GA->>CF: trash removed pages
     CF-->>GA: results
@@ -22,8 +21,8 @@ sequenceDiagram
 
 | Method | Purpose |
 |---|---|
-| `sync.py` | Reconcile pages |
-| `render_mermaid.py` | Render diagrams |
-| `validate.py` | PR checks |
+| `mark publish` | Render diagrams and publish pages |
+| `mark publish --compile-only --check-links internal` | PR validation, no credentials |
+| `mark --track-pages` | Track each file's page across renames |
 
 Back to [Beta Documentation Home](../index.md).

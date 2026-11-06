@@ -1,5 +1,4 @@
 ---
-doc_id: e83fb922-d91f-45b0-babf-28284044a00e
 title: Beta Documentation Home
 ---
 
@@ -14,7 +13,7 @@ each other's pages.
 
 ```mermaid
 flowchart LR
-    S[Mermaid source in Markdown] --> R[mermaid-cli renders SVG]
+    S[Mermaid source in Markdown] --> R[mark renders the diagram]
     R --> U[Uploaded as page attachment]
     U --> P[Confluence page shows diagram]
 ```
@@ -34,6 +33,7 @@ flowchart LR
 
 ## Isolation rules
 
-- Pages are tagged with the repository that owns them.
-- A repository only ever touches pages beneath its own root page.
-- Deletions are further limited to pages it created itself.
+- Each repository keeps its own page manifest in Confluence, so it only ever
+  recognises pages it published itself.
+- A repository only ever publishes beneath its own root page.
+- Deletions are limited to tracked pages beneath that root.

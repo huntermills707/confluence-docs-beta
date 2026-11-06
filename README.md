@@ -1,26 +1,23 @@
 # confluence-docs-beta
 
-Twin dummy repository for the GitHub → Confluence docs-as-code proof of
-concept. It publishes into the **same** Confluence space (`GHConfDocs`) as
-`confluence-docs-alpha`, but under **its own root page**. Each repository
-only ever reconciles pages whose `ghdocsync` content property names itself
-and that live beneath its own root — cross-repository interference is
-impossible by construction.
+Twin content repository for the GitHub → Confluence docs-as-code pipeline. It
+publishes into the **same** Confluence space (`GHConfDocs`) as
+`confluence-docs-alpha`, but under **its own root page**. Publishing is done
+by [mark](https://github.com/kovetskiy/mark) from a pinned Docker image — no
+custom sync code lives in this repository. Quick facts:
 
-See the canonical
-[`confluence-docs-sync`](https://github.com/huntermills707/confluence-docs-sync)
-documentation for the sync mechanics and release process. This repository
-contains content and thin workflows pinned to the same tool release as Alpha.
-Quick facts:
-
-* Every document carries a stable `doc_id` in its front matter; pages are
-  matched by that id, never by title or path.
+* When a pull request to `main` merges, `mark publish` reconciles
+  `docs/**/*.md` with this repository's subtree.
+* Every document carries a `title` in YAML front matter; pages are matched by
+  title in the space, and mark's page manifest (prefix `beta.sync`, stored in
+  Confluence) tracks each file's page across renames and retitles.
 * Titles must be unique within the space (this repo uses "Beta …" prefixes).
-* The **Sync docs to Confluence** workflow runs on pushes to `main` and via
-  `workflow_dispatch` (with `dry_run` and `force_delete` inputs).
-* **Validate docs (PR)** checks pull requests without Confluence credentials.
-* Deletions are trashed (reversible), happen last, and are capped at 5 pages
-  or 20% of managed pages unless `force_delete` is set.
+* The **Sync docs to Confluence** workflow runs on merges to `main` and via
+  `workflow_dispatch` (with a `dry_run` input).
+* **Validate docs (PR)** checks pull requests (`--compile-only
+  --check-links internal`) without Confluence credentials.
+* Removed files have their pages **trashed** (reversible), scoped to this
+  repository's root page; a run with any failure removes nothing.
 
 ## Repository secrets
 
@@ -32,23 +29,23 @@ Quick facts:
 | `CONFLUENCE_SPACE_KEY` | `GHConfDocs` |
 | `CONFLUENCE_ROOT_PAGE_ID` | **this repo's own root page id** (not alpha's) |
 
-The tool repository is public and requires no tool-specific checkout
-credential.
+The root page is only ever the parent of this repository's pages — mark
+never writes to it or deletes it.
 
 ## Layout
 
 ```text
 docs/
-├── index.md              home page
+├── index.md              page for docs/ itself (documentation home)
 ├── getting-started.md
 ├── reference/
-│   ├── _index.md         folder page with stable identity
+│   ├── index.md          folder page for reference/
 │   └── api.md
 └── assets/
     └── pipeline.png
 
-.github/workflows/       thin consumers pinned to v1.0.1 by full commit SHA
+.github/workflows/        thin mark consumers (pinned image tag)
 ```
 
-Change both workflow pins together to upgrade or roll back the tool. Do not
-copy sync scripts or dependencies into this repository.
+Change both workflow pins (`env.MARK_IMAGE`) together to upgrade or roll
+back the publisher.
